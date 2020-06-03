@@ -1,3 +1,5 @@
+using System;
+
 namespace PersonalInfo.Models
 {
 	public class ErrorViewModel
