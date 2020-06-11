@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Dynamic;
+using System.Linq;
+using Newtonsoft.Json;
 using PersonalInfo.Core.Models.Enums;
 
 namespace PersonalInfo.Core.Models.Entity
@@ -23,7 +27,14 @@ namespace PersonalInfo.Core.Models.Entity
 
 		public Role Role { get; set; }
 
-		public Dictionary<SocialLinks, string> SocialLinks { get; set; }
+		public string Social { get; set; }
+
+		[NotMapped]
+		public Dictionary<SocialLinks, string> SocialLinks
+		{
+			get => JsonConvert.DeserializeObject<Dictionary<SocialLinks, string>>(Social);
+			set => Social = JsonConvert.SerializeObject(value);
+		}
 
 		public string Image { get; set; }
 	}

@@ -16,4 +16,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalInfo.Core\PersonalInfo.Core.csproj" />
+  </ItemGroup>
+
 </Project>
