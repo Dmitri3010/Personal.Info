@@ -1,4 +1,4 @@
-﻿namespace PersonalInfo.Models.Enums
+﻿namespace PersonalInfo.Core.Models.Enums
 {
 	public enum FamilyStatus
 	{

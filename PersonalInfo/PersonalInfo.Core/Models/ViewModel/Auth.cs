@@ -1,4 +1,4 @@
-﻿namespace PersonalInfo.Models.Auth
+﻿namespace PersonalInfo.Core.Models.ViewModel
 {
 	public class Auth
 	{

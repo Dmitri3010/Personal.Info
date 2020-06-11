@@ -1,5 +1,5 @@
 ﻿using System;
-using PersonalInfo.Models.Enums;
+using PersonalInfo.Core.Models.Enums;
 
 namespace PersonalInfo.Core.Models.Entity
 {
