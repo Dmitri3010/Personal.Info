@@ -3,7 +3,7 @@ using PersonalInfo.Core.Models.Enums;
 
 namespace PersonalInfo.Core.Models.Entity
 {
-	public class Education : Base
+	public class Education : BaseDocument
 	{
 		public EducationType EducationType { get; set; }
 

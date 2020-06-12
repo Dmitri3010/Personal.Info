@@ -2,7 +2,7 @@
 
 namespace PersonalInfo.Core.Models.Entity
 {
-	public class Position : Base
+	public class Position : BaseDocument
 	{
 		public PositionType PositionType { get; set; }
 

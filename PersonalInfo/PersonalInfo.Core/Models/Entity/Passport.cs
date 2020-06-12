@@ -3,7 +3,7 @@ using PersonalInfo.Core.Models.Enums;
 
 namespace PersonalInfo.Core.Models.Entity
 {
-	public class Passport : Base
+	public class Passport : BaseDocument
 	{
 		public DateTimeOffset BirthDay { get; set; }
 
@@ -20,5 +20,14 @@ namespace PersonalInfo.Core.Models.Entity
 		public FamilyStatus FamilyStatus { get; set; }
 
 		public int CountOfChildren { get; set; }
+
+		public string PassportCopyImage { get; set; }
+
+		public string MedicalCopy { get; set; }
+
+		public string CriminalRecordImage { get; set; }
+
+		public string PsychologyCopyImage { get; set; }
+
 	}
 }

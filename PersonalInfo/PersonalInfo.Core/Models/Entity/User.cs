@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Dynamic;
 using System.Linq;
@@ -37,5 +38,15 @@ namespace PersonalInfo.Core.Models.Entity
 		}
 
 		public string Image { get; set; }
+
+		public Passport Passport { get; set; }
+
+		public Guid PassportId { get; set; }
+
+		public Education Education { get; set; }
+
+		public Guid EducationId { get; set; }
+
+
 	}
 }

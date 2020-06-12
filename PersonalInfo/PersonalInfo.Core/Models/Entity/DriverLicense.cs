@@ -3,7 +3,7 @@ using PersonalInfo.Core.Models.Enums;
 
 namespace PersonalInfo.Core.Models.Entity
 {
-	public class DriverLicense : Base
+	public class DriverLicense : BaseDocument
 	{
 		public string Range { get; set; }
 
