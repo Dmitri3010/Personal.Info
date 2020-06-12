@@ -1,6 +1,19 @@
 ﻿
 @{
-    ViewData["Title"] = "Login";
+	ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
+
+<body class="text-center">
+	<form class="form-signin" method="post">
+		<h1 class="h2-white">Добро пожаловать в ПЕРСОНАЛ.ИНФО</h1>
+		<h2 class="h2-grey">Платформа взаимодействия персонала</h2>
+		<label for="inputEmail" class="sr-only">Email address</label>
+		<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus name="Email">
+		<label for="inputPassword" class="sr-only">Password</label>
+		<input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="Password">
+		<button class="btn btn-block login-button" type="submit">Вход</button>
+		<button class="btn btn-block login-button" type="submit">Регистрация</button>
+		<a>Восстановить пароль</a>
+	</form>
+</body>
