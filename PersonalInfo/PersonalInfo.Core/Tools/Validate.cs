@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace PersonalInfo.Core.Tools
+﻿namespace PersonalInfo.Core.Tools
 {
 	public static class Validate
 	{
-		public static bool Validator<T>(T x)
+		public static bool Validator<T>(T value)
 		{
-			return x != null;
+			return value != null;
 		}
 	}
 }

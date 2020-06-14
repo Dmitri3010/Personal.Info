@@ -9,10 +9,15 @@ namespace PersonalInfo.Core.Tools
 {
 	public class DbInitializer
 	{
-		public static void InitializeUsers(Context context)
+		private static Context _dbContext;
+		public DbInitializer(Context context)
 		{
-			if (context.Users.Any()) return;
-			context.Users.AddRange(new User
+			_dbContext = context;
+		}
+		public void InitializeUsers()
+		{
+			if (_dbContext.Users.Any()) return;
+			_dbContext.Users.AddRange(new User
 			{
 				Id = Guid.NewGuid(),
 				Email = "admin@gmail.com",
@@ -20,11 +25,29 @@ namespace PersonalInfo.Core.Tools
 				Sex = Sex.Man,
 				PasswordSalt = "PasswordSalt",
 				PasswordHash = Sha256.Hash("PasswordSalt" + "3452"),
-				Role = Role.Administrator
+				Role = Role.Administrator,
+				Education = new Education(),
+				Passport = new Passport()
 			});
 
-			context.SaveChanges();
+			_dbContext.SaveChanges();
+		}
 
+		public void CreateDb(bool drop)
+		{
+			if (drop)
+			{
+				try
+				{
+					_dbContext.Database.EnsureDeleted();
+				}
+				catch (Exception ex)
+				{
+					// ignored
+				}
+			}
+
+			_dbContext.Database.EnsureCreated();
 		}
 	}
 }
