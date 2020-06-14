@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using PersonalInfo.Auth;
 using PersonalInfo.Core.Db;
 using PersonalInfo.Core.Models.Entity;
 using PersonalInfo.Core.Models.ViewModel;
@@ -14,11 +12,11 @@ namespace PersonalInfo.Controllers
 {
 	public class AuthController : Controller
 	{
-		private readonly Context db;
+		private readonly Context _db;
 
 		public AuthController(Context context)
 		{
-			db = context;
+			_db = context;
 		}
 
 		[HttpGet]
@@ -28,28 +26,58 @@ namespace PersonalInfo.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Login(Auth user)
+		public IActionResult Login(Core.Models.ViewModel.Auth user)
 		{
 			if (!Validate.Validator(user))
 			{
 				return RedirectToAction("Login");
 			}
 
-			var userFromDb = db.Users.FirstOrDefault(p => p.Email == user.Email);
+			var userFromDb = _db.Users.FirstOrDefault(p => p.Email == user.Email);
 			if (userFromDb == null)
 			{
 				return RedirectToAction("Login");
 			}
 
-			return Sha256.Hash(user.Password + userFromDb.PasswordSalt) 
-					!= userFromDb.PasswordHash ? RedirectToAction("Login") 
-					: RedirectToAction("", "");
+			if (Sha256.Hash(user.Password + userFromDb.PasswordSalt) != userFromDb.PasswordHash)
+				return RedirectToAction("Login");
+
+			var logginedUser = new LogginedUser()
+			{
+				Id = Guid.NewGuid(),
+				UserId = userFromDb.Id,
+				AuthToken = Guid.NewGuid(),
+				TimeoutMins = 180,
+				LoginTime = DateTimeOffset.Now
+			};
+
+			_db.LoginedUsers.Add(logginedUser);
+			_db.SaveChanges();
+
+			Response.Cookies.Append("AuthToken", logginedUser.AuthToken.ToString());
+
+			return RedirectToAction("Index", "Main");
 		}
 
 		[HttpGet]
 		public IActionResult Register()
 		{
 			return View();
+		}
+
+		[HttpPost]
+		public IActionResult Register(User authUser)
+		{
+			if (!Validate.Validator(authUser))
+			{
+				return RedirectToAction("Login");
+			}
+
+			var user = Mapper.Map<User>(authUser);
+
+			_db.Users.Add(user);
+			_db.SaveChanges();
+			return RedirectToAction("", "");
 		}
 	}
 }
