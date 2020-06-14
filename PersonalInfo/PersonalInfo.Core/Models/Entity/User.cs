@@ -46,7 +46,5 @@ namespace PersonalInfo.Core.Models.Entity
 		public Education Education { get; set; }
 
 		public Guid EducationId { get; set; }
-
-
 	}
 }
