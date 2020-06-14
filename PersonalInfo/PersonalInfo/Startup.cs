@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PersonalInfo.Auth;
 using PersonalInfo.Core.Db;
 
 
@@ -29,9 +30,13 @@ namespace PersonalInfo
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
-			string connection = Configuration.GetConnectionString("DefaultConnection");
+			var connection = Configuration.GetConnectionString("DefaultConnection");
 			services.AddDbContext<Context>(options => options.UseSqlServer(connection));
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc(options =>
+				{
+					//options.Filters.Add(typeof(AuthFilter));
+				}
+				).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +61,7 @@ namespace PersonalInfo
 			{
 				routes.MapRoute(
 					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
+					template: "{controller=Main}/{action=Index}/{id?}");
 			});
 		}
 	}

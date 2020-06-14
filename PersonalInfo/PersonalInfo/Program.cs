@@ -25,7 +25,9 @@ namespace PersonalInfo
 				try
 				{
 					var context = services.GetRequiredService<Context>();
-					DbInitializer.InitializeUsers(context);
+					var db = new DbInitializer(context);
+					db.CreateDb(true);
+					db.InitializeUsers();
 				}
 				catch (Exception ex)
 				{
