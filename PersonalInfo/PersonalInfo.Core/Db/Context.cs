@@ -10,6 +10,9 @@ namespace PersonalInfo.Core.Db
 		public DbSet<Passport> Passports { get; set; }
 		public DbSet<Education> Educations { get; set; }
 		public DbSet<DriverLicense> DriverLicenses { get; set; }
+		public DbSet<LogginedUser> LoginedUsers { get; set; }
+		public DbSet<FAQ> Faqs { get; set; }
+		public DbSet<News> News { get; set; }
 
 		public Context(DbContextOptions<Context> contextOptions) 
 			: base(contextOptions)
