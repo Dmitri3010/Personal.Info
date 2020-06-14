@@ -1,6 +1,8 @@
 ﻿
 @{
-    ViewData["Title"] = "Register";
+	ViewData["Title"] = "Register";
 }
 
-<h1>Register</h1>
+<h1>Регистрация</h1>
+<h4>Для доступа к системе вам необходимо пройти процесс регистрации личных данных</h4>
+@await Html.PartialAsync("Particial/RegisterStep1")
