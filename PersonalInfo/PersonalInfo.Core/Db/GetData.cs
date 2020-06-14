@@ -10,7 +10,7 @@ namespace PersonalInfo.Core.Db
 		{
 			using (var context = new Context(new DbContextOptions<Context>()))
 			{
-				return context.LogginedUsers.FirstOrDefault(p => p.AuthToken.ToString() == token);
+				return context.LoginedUsers.FirstOrDefault(p => p.AuthToken.ToString() == token);
 			}
 		}
 	}
