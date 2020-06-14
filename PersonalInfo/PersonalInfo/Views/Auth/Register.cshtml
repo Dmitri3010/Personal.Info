@@ -1,8 +1,30 @@
-﻿
+﻿@using PersonalInfo.Core.Models.Enums
+@model PersonalInfo.Core.Models.ViewModel.Register
 @{
 	ViewData["Title"] = "Register";
 }
-
-<h1>Регистрация</h1>
-<h4>Для доступа к системе вам необходимо пройти процесс регистрации личных данных</h4>
-@await Html.PartialAsync("Particial/RegisterStep1")
+<body class="text-center">
+	<form class="form-signin" method="post">
+		<h1 class="h2-white">Регистрация нового пользователя</h1>
+		<h2 class="h2-grey">Заполните начальные данные для входа</h2>
+		<h2 class="h2-grey">ПЕРСОНАЛ.ИНФО</h2>
+		<input asp-for="Name" type="text" id="name" class="form-control" placeholder="Имя" required autofocus name="Name">
+		<input asp-for="Surname" type="text" id="surname" class="form-control" placeholder="Фамилия" required name="Surname">
+		<input asp-for="SecondName" type="text" id="SecondName" class="form-control" placeholder="Отчество" required name="SecondName">
+		<select asp-for="Sex" asp-items="Html.GetEnumSelectList<Sex>()"></select>
+		<input asp-for="Email" type="email" id="email" class="form-control" placeholder="Email" required name="Email">
+		<input asp-for="Phone" type="text" id="phone" class="form-control" placeholder="Телефон" required name="Phone">
+		<input asp-for="Password" type="password" id="password" class="form-control" placeholder="Пароль" required name="Password">
+		<input type="password" id="password2" class="form-control" placeholder="Подтверждение пароля" required>
+		<div class="container" style="margin-bottom: 3%">
+			<div class="row">
+				<div class="col-sm-6">
+					<button class="btn btn-block login-button" type="submit">Далее</button>
+				</div>
+				<div class="col-sm-6">
+					Поля, отмеченные * обязательны к заполнению
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
