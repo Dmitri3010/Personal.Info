@@ -1,4 +1,73 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using PersonalInfo.Core.Models.Enums
+@model PersonalInfo.Core.Models.ViewModel.PassportVM
+@{
+	ViewData["Title"] = "Register";
+}
+
+<h1>Регистрация</h1>
+<h4 style="color: #E3E2E2; margin-bottom: 3%">Для доступа к системе вам необходимо пройти процесс регистрации личных данных</h4>
+<div class="register-info">
+	<div class="container" style="margin-bottom: 3%">
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="row">
+					<div class="col-sm step done align-middle">1 этап</div>
+					<div class="col-sm step">2 этап</div>
+					<div class="col-sm step">3 этап</div>
+					<div class="col-sm step">4 этап</div>
+					<div class="col-sm step">5 этап</div>
+					<divы class="col-sm step">Доступ открыт</divы>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<form method="post" enctype="multipart/form-data">
+			<div class="col-sm-4">
+				<label> Паспортные данные</label>
+				<input type="hidden" name="userId" value="@Model.UserId"/>
+				<input type="date" asp-for="BirthDay" required name="BirthDay" placeholder="Дата рождения" />
+				<input type="text" asp-for="Number" required name="Number" placeholder="Серия и номер паспорта" />
+				<div class="row">
+					<div class="col-sm-6">
+						<input type="date" asp-for="DateOfIssue" placeholder="Дата выдачи" required name="DateOfIssue" />
+					</div>
+					<div class="col-sm-6">
+						<input type="date" asp-for="EndOfPassport" placeholder="Срок действия" required name="EndOfPassport" />
+					</div>
+				</div>
+				<input type="text" asp-for="BirthPlace" required name="BirthPlace" placeholder="Место рождения" />
+				<input type="text" asp-for="LivePlace" required name="LivePlace" placeholder="Прописка" />
+				<input type="date" asp-for="Citizenship" required name="Citizenship" placeholder="Гражданство" />
+				<select asp-for="FamilyStatus" asp-items="Html.GetEnumSelectList<FamilyStatus>()"></select>
+				<input type="number" asp-for="CountOfChildren" required name="CountOfChildren" placeholder="Количество детей" />
+				<input type="submit" class="btn btn-success" value="Принять">
+				<a type="button" class="btn btn-danger" asp-action="Login">Отклонить</a>
+			</div>
+			<div class="col-sm-8" style="background: black">
+				<div class="row">
+					<div class="form-group">
+						<img id="passportImg" width="200" />
+						<input type="file" id="passport" name="passportcopy" asp-for="PassportCopy" />
+						<label>passport</label>
+					</div>
+					<div class="form-group">
+						<img id="image_medical" width="200" />
+						<input type="file" id="medical" name="medical" asp-for="Medical" />
+						<label>passport</label>
+					</div>
+					<div class="form-group">
+						<img id="prison_Img" width="200" />
+						<input type="file" id="prison" name="prisoncopy" asp-for="PrisonCopy" />
+						<label>passport</label>
+					</div>
+					<div class="form-group">
+						<img id="prison_alco" width="200" />
+						<input type="file" id="alco" name="alcocopy" asp-for="AlcoCopy" />
+						<label>passport</label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
