@@ -11,6 +11,8 @@ namespace PersonalInfo.Core.Models.Entity
 
 		public DateTimeOffset DateOfIssue { get; set; }
 
+		public DateTimeOffset EndOfPassport { get; set; }
+
 		public string BirthPlace { get; set; }
 
 		public string LivePlace { get; set; }
@@ -28,6 +30,8 @@ namespace PersonalInfo.Core.Models.Entity
 		public string CriminalRecordImage { get; set; }
 
 		public string PsychologyCopyImage { get; set; }
+
+		public Guid UserId { get; set; }
 
 	}
 }

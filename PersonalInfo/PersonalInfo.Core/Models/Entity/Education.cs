@@ -14,5 +14,7 @@ namespace PersonalInfo.Core.Models.Entity
 		public DateTimeOffset DateOfGradulation { get; set; }
 
 		public string CopyOfDiploma { get; set; }
+
+		public Guid UserId { get; set; }
 	}
 }
