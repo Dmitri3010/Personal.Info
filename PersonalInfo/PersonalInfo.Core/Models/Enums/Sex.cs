@@ -9,9 +9,4 @@ namespace PersonalInfo.Core.Models.Enums
 		[Display(Name = "Ж")]
 		Women = 1
 	}
-
-	public class SexModel
-	{
-		public Sex Sex { get; set; }
-	}
 }
