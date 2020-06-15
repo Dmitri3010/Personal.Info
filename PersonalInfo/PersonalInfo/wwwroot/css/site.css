@@ -57,6 +57,7 @@ html {
 body {
 	height: 100%;
 	background-color: #202631;
+	color: white;
 }
 
 /*body {
@@ -113,7 +114,6 @@ body {
 		max-width: 330px;
 		margin-left: 90px;
 		border-color: #707070;
-
 	}
 
 .h2-white {
@@ -138,4 +138,24 @@ body {
 .login-input {
 	max-width: 330px;
 	margin-left: 90px;
+}
+
+.step {
+	border: 5px solid #F6F6F6;
+	text-align: center;
+	margin-right: 3%;
+	background: #2a3448;
+}
+
+.register-info {
+	color: white;
+}
+
+register-info-text {
+	background-color: black;
+	margin-bottom: 3%;
+}
+
+.done {
+	background: green;
 }
