@@ -7,15 +7,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PersonalInfo.Auth;
 using PersonalInfo.Core.Db;
+using PersonalInfo.Core.Tools;
 
 
 namespace PersonalInfo
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
+		private IHostingEnvironment env;
+
+		public Startup(IConfiguration configuration, IHostingEnvironment env)
 		{
 			Configuration = configuration;
+			this.env = env;
+			Statics.Configuration = configuration;
 		}
 
 		public IConfiguration Configuration { get; }
@@ -63,6 +68,7 @@ namespace PersonalInfo
 					name: "default",
 					template: "{controller=Main}/{action=Index}/{id?}");
 			});
+			Statics.WebRootPath = env.WebRootPath;
 		}
 	}
 }
