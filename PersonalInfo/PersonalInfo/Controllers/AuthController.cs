@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PersonalInfo.Core.Db;
 using PersonalInfo.Core.Models.Entity;
@@ -89,6 +91,23 @@ namespace PersonalInfo.Controllers
 				SocialLinks = new Dictionary<SocialLinks, string>()
 			};
 
+			var passport = new Passport()
+			{
+				Id = Guid.NewGuid(),
+				UserId = user.Id
+			};
+
+			var education = new Education()
+			{
+				Id = Guid.NewGuid(),
+				UserId = user.Id
+			};
+
+			user.Passport = passport;
+			user.Education = education;
+			user.PassportId = passport.Id;
+			user.EducationId = education.Id;
+
 			var passwordSalt = Guid.NewGuid().ToString();
 			var passwordHash = Sha256.Hash(authUser.Password + passwordSalt);
 			user.PasswordSalt = passwordSalt;
@@ -109,13 +128,43 @@ namespace PersonalInfo.Controllers
 		public IActionResult RegisterStep(Guid userId)
 		{
 			var user = _db.Users.FirstOrDefault(p => p.Id.ToString() == userId.ToString());
-			return RedirectToAction("RegisterStep2",user);
+			return RedirectToAction("RegisterStep2", user);
 		}
 
 		[HttpGet]
 		public IActionResult RegisterStep2(User user)
 		{
-			return View(user);
+			var passport = new PassportVM()
+			{
+				UserId = user.Id
+			};
+			return View(passport);
+		}
+
+		[HttpPost]
+		public IActionResult RegisterStep2([FromForm]PassportVM userPassport)
+		{
+			var passport = _db.Passports.FirstOrDefault(p => p.Id == userPassport.UserId) ?? new Passport() { UserId = userPassport.UserId, Id = Guid.NewGuid() };
+
+			passport.Id = Guid.NewGuid();
+			passport.BirthPlace = userPassport.BirthPlace;
+			passport.BirthDay = userPassport.BirthDay;
+			passport.Citizenship = userPassport.Citizenship;
+			passport.CountOfChildren = userPassport.CountOfChildren;
+			passport.FamilyStatus = userPassport.FamilyStatus;
+			passport.Number = userPassport.Number;
+			passport.LivePlace = userPassport.LivePlace;
+			passport.DateOfIssue = userPassport.DateOfIssue;
+			passport.EndOfPassport = userPassport.EndOfPassport;
+
+			passport.PassportCopyImage = SaveFile(userPassport.PassportCopy, "documents");
+			passport.MedicalCopy = SaveFile(userPassport.Medical, "documents");
+			passport.CriminalRecordImage = SaveFile(userPassport.PrisonCopy, "documents");
+			passport.PsychologyCopyImage = SaveFile(userPassport.AlcoCopy, "documents");
+
+			_db.Passports.Add(passport);
+			_db.SaveChanges();
+			return RedirectToAction("RegisterStep3", _db.Users.FirstOrDefault(p => p.Id == userPassport.UserId));
 		}
 
 		[HttpGet]
@@ -129,5 +178,32 @@ namespace PersonalInfo.Controllers
 		{
 			return View(user);
 		}
+
+		private static string SaveFile(IFormFile file, string folder)
+		{
+			if (file == null)
+			{
+				return null;
+			}
+
+			var fileName = $"{Guid.NewGuid()}__{file.FileName}";
+			var saveImagePath = $"images/{folder}/{fileName}";
+			var fullPath = Path.Combine(Statics.WebRootPath, saveImagePath);
+
+			try
+			{
+				using (var fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write))
+				{
+					file.CopyTo(fileStream);
+					return fileName;
+				}
+			}
+			catch
+			{
+				return null;
+			}
+		}
+
+
 	}
 }
