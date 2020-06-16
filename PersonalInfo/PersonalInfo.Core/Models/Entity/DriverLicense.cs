@@ -16,5 +16,7 @@ namespace PersonalInfo.Core.Models.Entity
 		public bool IsExist { get; set; }
 
 		public string CopyOfLicense { get; set; }
+
+		public Guid UserId { get; set; }
 	}
 }

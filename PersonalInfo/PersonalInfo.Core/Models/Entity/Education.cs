@@ -11,10 +11,16 @@ namespace PersonalInfo.Core.Models.Entity
 
 		public string Specialty { get; set; }
 
-		public DateTimeOffset DateOfGradulation { get; set; }
+		public int DateOfGradulation { get; set; }
 
 		public string CopyOfDiploma { get; set; }
 
+		public string CopyOfWorkBook { get; set; }
+
 		public Guid UserId { get; set; }
+
+		public PositionType PositionType { get; set; }
+
+		public float WorkTime { get; set; }
 	}
 }
