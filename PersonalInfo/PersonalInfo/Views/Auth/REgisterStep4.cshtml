@@ -1,0 +1,47 @@
+﻿@using PersonalInfo.Core.Models.Enums
+@model PersonalInfo.Core.Models.ViewModel.DriverLicenseVm
+@{
+	ViewData["Title"] = "Register";
+}
+
+<h1>Регистрация</h1>
+<h4 style="color: #E3E2E2; margin-bottom: 3%">Для доступа к системе вам необходимо пройти процесс регистрации личных данных</h4>
+<div class="register-info">
+	<div class="container" style="margin-bottom: 3%">
+		<div class="row">
+			<div class="col-sm-10">
+				<div class="row">
+					<div class="col-sm step done align-middle">1 этап</div>
+					<div class="col-sm step done">2 этап</div>
+					<div class="col-sm done step">3 этап</div>
+					<div class="col-sm step">4 этап</div>
+					<div class="col-sm step">5 этап</div>
+					<div class="col-sm step">Доступ открыт</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<form method="post" enctype="multipart/form-data">
+			<div class="col-sm-4">
+				<label> Водительское удостоверение</label>
+				<input type="hidden" name="userId" value="@Model.UserId" />
+				<input type="text" asp-for="Number" required name="Number" placeholder="Номер" />
+				<input type="text" asp-for="Range" required name="Range" placeholder="Серия" />
+				<input type="date" asp-for="DueDate" required name="DueDate" placeholder="Срок действия" />
+				<select asp-for="Category" asp-items="Html.GetEnumSelectList<Category>()"></select>
+				<input type="submit" class="btn btn-success" value="Принять">
+				<a type="button" class="btn btn-danger" asp-action="RegisterStep3">Назад</a>
+			</div>
+			<div class="col-sm-8" style="background: black">
+				<div class="row">
+					<div class="form-group">
+						<img id="passportImg" width="200" />
+						<input type="file" id="CopyOfLicense" name="CopyOfLicense" asp-for="CopyOfLicense" />
+						<label>Скан-копия водительского удостоверения</label>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
