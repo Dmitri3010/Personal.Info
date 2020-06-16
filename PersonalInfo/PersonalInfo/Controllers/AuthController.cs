@@ -170,13 +170,82 @@ namespace PersonalInfo.Controllers
 		[HttpGet]
 		public IActionResult RegisterStep3(User user)
 		{
-			return View(user);
+			var educationModel = new EducationVM()
+			{
+				UserId = user.Id
+			};
+			return View(educationModel);
+		}
+
+		[HttpPost]
+		public IActionResult RegisterStep3([FromForm]EducationVM educationModel)
+		{
+			var education = new Education
+			{
+				Id = Guid.NewGuid(),
+				EducationType = educationModel.EducationType,
+				PositionType = educationModel.PositionType,
+				Specialty = educationModel.Specialty,
+				Qualification = educationModel.Qualification,
+				WorkTime = educationModel.WorkTime,
+				DateOfGradulation = educationModel.DateOfGradulation,
+				UserId = educationModel.UserId,
+				CopyOfDiploma = SaveFile(educationModel.DiplomaScan, "documents"),
+				CopyOfWorkBook = SaveFile(educationModel.WorkBookScan, "documents")
+			};
+
+
+			_db.Educations.Add(education);
+			_db.SaveChanges();
+			return RedirectToAction("RegisterStep4", _db.Users.FirstOrDefault(p => p.Id == education.UserId));
 		}
 
 		[HttpGet]
 		public IActionResult RegisterStep4(User user)
 		{
-			return View(user);
+			var license = new DriverLicenseVm()
+			{
+				UserId = user.Id
+			};
+			return View(license);
+		}
+
+		[HttpPost]
+		public IActionResult RegisterStep4(DriverLicenseVm driverLicense)
+		{
+			var license = new DriverLicense
+			{
+				Id = Guid.NewGuid(),
+				DueDate = driverLicense.DueDate,
+				Number = driverLicense.Number,
+				Range = driverLicense.Range,
+				Category = driverLicense.Category,
+				UserId = driverLicense.UserId,
+				CopyOfLicense = SaveFile(driverLicense.CopyOfLicense, "documents")
+			};
+
+			_db.DriverLicenses.Add(license);
+			_db.SaveChanges();
+
+			return View("RegisterStep5", _db.Users.FirstOrDefault(p => p.Id == driverLicense.UserId));
+		}
+
+		[HttpGet]
+		public IActionResult RegisterStep5(string userId)
+		{
+			return View(_db.Users.FirstOrDefault(p => p.Id.ToString() == userId));
+		}
+
+		//[HttpPost]
+		//public IActionResult RegisterStep5(User user)
+		//{
+		//	return View("RegisterFinish", user);
+		//}
+
+		[HttpGet]
+		public IActionResult RegisterFinish(string userId)
+		{
+			return View(_db.Users.FirstOrDefault(p => p.Id.ToString() == userId));
 		}
 
 		private static string SaveFile(IFormFile file, string folder)
@@ -203,7 +272,5 @@ namespace PersonalInfo.Controllers
 				return null;
 			}
 		}
-
-
 	}
 }
